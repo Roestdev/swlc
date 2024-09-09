@@ -1,2 +1,3 @@
-# swlc
-Search Westminster Leningrad Codex
+![Search Westminster Leningrad Codex](./images/wlc.png)
+
+
