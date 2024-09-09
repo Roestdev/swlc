@@ -1,2 +1,2 @@
-# swlc-rs
+# swlc
 Search Westminster Leningrad Codex
