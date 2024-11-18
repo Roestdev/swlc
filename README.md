@@ -7,9 +7,10 @@
 
 # NOTE
 
-For now this is just a skeleton. 
+This project is under heavy development. Please note that all aspects of this project are subject to change along the road, due evolving requirements and changes in insight.
 
 
+<br>
 
 
 # Motivation
@@ -25,7 +26,7 @@ Here are some points I miss most in existing search engines:
    The maqaf is a type of hyphen used to connect two words. In Hebrew, this is not a new word, but it is more of a “sound unit” made up of two separate words. I should be able to find each of those separate words.
 
 2. **Consonants and diacritics**  
-   Finding specific combinations of consonants and diacritics is not possible. You usually get a list of the requested consonants including all diacritics. This means you still have to manually search the given list for your specific diacrtics.
+   Finding specific combinations of consonants and diacritics is not possible. You usually get a list of the requested consonants including all diacritics. This means you still have to manually search the given list for your specific diacritics.
    
 <br>
 

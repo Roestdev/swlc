@@ -1,4 +1,5 @@
 [workspace]
+
 resolver = "2"
 
 members = [
@@ -12,3 +13,21 @@ members = [
     , "swlc_gen"
 ]
 
+[workspace.package]
+
+authors = ["Roest Dev <github.ebook242@passinbox.com>"]
+categories = ["text-processing"]
+# description	
+documentation = "https://github.com/Roestdev/swlc/"
+edition = "2021"
+# exclude
+homepage = "https://github.com/Roestdev/swlc/"	
+# include
+keywords = ["search", "hebrew", "WLC", "Westminster Leningrad Codex"]
+license = "MIT OR Apache-2.0"
+# license-file	
+# publish
+readme = "https://github.com/Roestdev/swlc/README.md"	
+repository = "https://github.com/Roestdev/swlc/"
+# rust-version	
+version = "0.1.0"

@@ -1,16 +1,21 @@
 [package]
 name = "swlc_com"
-version = "0.1.0"
-edition = "2021"
 #
-description = "Common libraries for SWLC"
-categories = ["text-processing"]
-keywords = ["search", "hebrew", "WLC", "Westminster Leningrad Codex"]
-authors = ["Roest Dev <github.ebook242@passinbox.com>"]
-documentation = "https://github.com/Roestdev/swlc/"
-homepage = "https://github.com/Roestdev/swlc/"	
-readme = "https://github.com/Roestdev/swlc/README.md"	
-repository = "https://github.com/Roestdev/swlc/"
-license = "MIT OR Apache-2.0"
+authors.workspace = true
+categories.workspace = true
+description = "Common library for SWLC"
+documentation.workspace = true
+edition.workspace = true
+# exclude
+homepage.workspace = true	
+# include
+keywords.workspace = true
+license.workspace = true
+# license-file	
+# publish
+readme.workspace = true	
+repository.workspace = true
+# rust-version	
+version.workspace = true
 
 [dependencies]
