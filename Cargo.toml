@@ -1,0 +1,14 @@
+[workspace]
+resolver = "2"
+
+members = [
+    # CLI binary of the search program
+    "swlc_cli"
+    # GUI binary of the search program
+    , "swlc_gui"
+    # Common libraries of the search program
+    , "swlc_com"
+    # Generated lib 
+    , "swlc_gen"
+]
+
