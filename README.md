@@ -50,3 +50,29 @@ A binary crate, used to generate the model (Rust code) from text files.
 
 
 
+## License
+
+The `swlc` package is distributed under either of
+
+ * [Apache License, Version 2.0](LICENSE-APACHE)
+ * [MIT license](LICENSE-MIT)
+
+at your option.
+
+### Contribution<a name="contribution"></a>
+
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
+be dual licensed as above, without any additional terms or conditions.
+
+
+## Questions, requests, bugs
+
+I invite you to:
+
+- Ask questions
+- Make requests for new features or improvements
+- Report bugs or suggest enhancements
+
+Any input is welcome. To do this, you can submit a request [here](https://github.com/Roestdev/swlc/issues).
+
