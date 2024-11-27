@@ -48,6 +48,60 @@ A library crate that will contain the model.
 **swcl_gen**   
 A binary crate, used to generate the model (Rust code) from text files.
 
+</br>
+
+# SWLC_GEN
+
+## Introduction
+This crate is part of the swl package and is used to generate a specific library (rust code). 
+It automates the process of generating a Rust library based on user-supplied mixed-mode LTR/RTL text files. The advantage is also that any modification in the source files does not cause additional typing.
+
+The generated library consists one function which makes is possible create a model of the SWLC for further processing.
+
+## Usage
+
+```
+> swlc_gen     generates the library
+> swlc_gen c   copies the library 
+```
+## HowTo
+
+**Preconditions**
+
+In order to generate a new version of the library yourself you will need the following:
+
+1. Install the latest version of [Rust and Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) on your system.
+2. Download the latest version of the text format (`Tanach.txt.zip`) from [Unicode/XML Leningrad Codex (UXLC)](https://tanach.us/Pages/About.html).
+
+</br>
+
+**Steps to generate the library**
+
+1. Download and unzip the `swlc` package from [GitHub](https://github.com/Roestdev/swlc)
+
+2. Step into the swlc directory
+``` rust
+cd swlc
+```
+
+3. Unzip Tanach.txt.zip in swlc_gen/data/input
+
+4. Generate the library first
+  
+``` rust
+cargo build -p swlc_gen
+```
+
+5. Generate the library first
+``` rust
+cargo run -p swlc_gen
+```
+
+6. Copy the generated library into swlc_com/src/
+
+``` rust
+cargo run -p swlc_gen c
+```
 
 
 ## License
@@ -58,6 +112,9 @@ The `swlc` package is distributed under either of
  * [MIT license](LICENSE-MIT)
 
 at your option.
+
+**Except** all biblical Hebrew text, this may be viewed or copied without restriction. 
+For more information about their licence see [Tanach.us](https://tanach.us/License.html).
 
 ### Contribution<a name="contribution"></a>
 
@@ -74,5 +131,5 @@ I invite you to:
 - Make requests for new features or improvements
 - Report bugs or suggest enhancements
 
-Any input is welcome. To do this, you can submit a request [here](https://github.com/Roestdev/swlc/issues).
+Any input is welcome. To do this, you can submit an issue [here](https://github.com/Roestdev/swlc/issues).
 

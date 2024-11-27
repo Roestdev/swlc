@@ -17,7 +17,10 @@ readme.workspace = true
 repository.workspace = true
 # rust-version
 # version
-version = "0.1.0"
+version.workspace = true
 
 [dependencies]
-swlc_com = {path = "../swlc_com"}
+#swlc_common = { path = "../swlc_common" }
+chrono.workspace = true
+exitcode.workspace = true
+regex.workspace = true

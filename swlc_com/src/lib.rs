@@ -1,6 +1,6 @@
 // common library crate
 pub fn function_to_be_removed(text: &str) -> bool {
-    println!("Common library called from crate: {}",text);
+    println!("Common library called from crate: {}", text);
     true
 }
 #[cfg(test)]
