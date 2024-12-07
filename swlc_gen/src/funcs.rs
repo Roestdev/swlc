@@ -8,37 +8,19 @@ use std::path::Path;
 use std::process::exit;
 use std::process::Command;
 
-//const NR_OF_BOOKS_IN_TANACH: usize = 36; // Actual number of books
-const NR_OF_BOOKS_IN_TANACH: usize = 4; // For testing only
+use swlc_core::NR_OF_BOOKS_IN_TANACH;
 
-pub fn process_all_source_files(
-    wlc_dir: &str,
-    file_names: Vec<String>,
-    file_to_generate_p: &Path,
-) -> Result<(), std::io::Error> {
-    println!("Generate code for every file ...");
-    for file in file_names {
-        println!("  > Processing file: [{}{}]", wlc_dir, file);
-        let wlc_dir = Path::new(wlc_dir);
-        let file_to_read: &str = &file;
-        let file_to_read_pb = wlc_dir.join(file_to_read);
-        let file_to_read_p = file_to_read_pb.as_path();
-        import_book_from_file(file_to_read_p, file_to_generate_p)?;
-    }
-    Ok(())
-}
 pub fn get_files_names(wlc_dir: &str) -> Vec<String> {
     let entries = fs::read_dir(wlc_dir);
     let files = match entries {
         Ok(v) => v,
         Err(error) => {
             println!("ERROR::{}", error);
-            println!("Program will halt with  exit code: {}", exitcode::CONFIG);
+            println!("Program will halt with exit code: {}", exitcode::CONFIG);
             exit(exitcode::CONFIG);
         }
     };
     let file_names: Vec<String> = files
-        //.expect("Unable to open directory.")
         .filter_map(|entry| {
             let path = entry.ok()?.path();
             if path.is_file() {
@@ -49,19 +31,38 @@ pub fn get_files_names(wlc_dir: &str) -> Vec<String> {
         })
         .collect();
 
-    println!("Check if the correct number of files are present in the source directory ...");
-    if NR_OF_BOOKS_IN_TANACH != file_names.len() {
+    println!(
+        "Check if the correct number of WLC txt files are present in the source directory ..."
+    );
+    if usize::from(NR_OF_BOOKS_IN_TANACH) != file_names.len() {
         println!(
             "ERROR::Expected: {} file(s), found: {} file(s).",
             NR_OF_BOOKS_IN_TANACH,
             file_names.len()
         );
-        println!("Program will halt with  exit code: {}", exitcode::CONFIG);
+        println!("Program will halt with exit code: {}", exitcode::CONFIG);
         exit(exitcode::CONFIG);
     } else {
         println!("  > Correct number of files are found.");
     }
     file_names
+}
+
+pub fn process_all_source_files(
+    wlc_dir: &str,
+    file_names: Vec<String>,
+    file_to_generate_p: &Path,
+) -> Result<(), std::io::Error> {
+    println!("Generate code for every WLC text file ...");
+    for file in file_names {
+        println!("  > Processing file: [{}{}]", wlc_dir, file);
+        let wlc_dir = Path::new(wlc_dir);
+        let file_to_read: &str = &file;
+        let file_to_read_pb = wlc_dir.join(file_to_read);
+        let file_to_read_p = file_to_read_pb.as_path();
+        import_book_from_file(file_to_read_p, file_to_generate_p)?;
+    }
+    Ok(())
 }
 
 pub fn insert_header(output_file: &Path) -> Result<(), std::io::Error> {
@@ -83,11 +84,16 @@ pub fn insert_header(output_file: &Path) -> Result<(), std::io::Error> {
     )?;
 
     writeln!(&output_file, "use std::collections::HashMap;")?;
-    writeln!(&output_file, "use crate::model::*;")?;
+    writeln!(&output_file, "use crate::model_definition::Tanach;")?;
+    writeln!(&output_file, "use crate::model_definition::BookMetaData;")?;
+    writeln!(&output_file, "use crate::model_definition::VerseReference;")?;
     writeln!(&output_file, "use crate::NR_OF_BOOKS_IN_TANACH;")?;
     writeln!(&output_file, "\n")?;
 
-    writeln!(&output_file, "pub fn get_tanach()  -> Tanach {{")?;
+    writeln!(
+        &output_file,
+        "pub fn get_instanstance_of_tanach()  -> Tanach {{"
+    )?;
     writeln!(&output_file, "    let mut tanach = Tanach {{")?;
     writeln!(
         &output_file,
@@ -242,14 +248,9 @@ pub fn import_book_from_file(in_path: &Path, out_path: &Path) -> Result<(), std:
     Ok(())
 }
 
-pub fn copy_generated_file(from: &str,to: &str) {
-    println!("Copying the generated file to the common library of the crate 'swlc' ...");
-    match fs::copy(
-        //"code_gen/data/swlc_gen_result/generated_code.rs",
-        //"swlc_com/src/generated_code.rs",
-        from,
-        to,
-    ) {
+pub fn copy_generated_file(from: &str, to: &str) {
+    println!("Copying the generated file to the 'swlc_core' of the 'swlc' package...");
+    match fs::copy(from, to) {
         Ok(count) => {
             println!(
                 "  > Copying succesfull, a total of {} bytes were copied.",
@@ -268,5 +269,4 @@ pub fn copy_generated_file(from: &str,to: &str) {
             }
         },
     }
-    exit(1);
 }

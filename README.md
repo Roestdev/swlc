@@ -84,9 +84,9 @@ In order to generate a new version of the library yourself you will need the fol
 cd swlc
 ```
 
-3. Unzip Tanach.txt.zip in swlc_gen/data/input
+3. Unzip Tanach.txt.zip in the following directory: `swlc_gen/data/input`
 
-4. Generate the library first
+4. Build the executable `swlc_gen`
   
 ``` rust
 cargo build -p swlc_gen
@@ -97,7 +97,7 @@ cargo build -p swlc_gen
 cargo run -p swlc_gen
 ```
 
-6. Copy the generated library into swlc_com/src/
+6. Copy the generated library into `swlc_core/src/`
 
 ``` rust
 cargo run -p swlc_gen c

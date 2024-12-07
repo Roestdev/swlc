@@ -1,13 +1,15 @@
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //              ===> DO NOT CHANGE THIS FILE !!! <===                   +
-// This file was automatically generated at: 2024-11-27T22:20:54.833    +
+// This file was automatically generated at: 2024-12-07T13:38:32.854    +
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-use crate::model::*;
+use crate::model_definition::BookMetaData;
+use crate::model_definition::Tanach;
+use crate::model_definition::VerseReference;
 use crate::NR_OF_BOOKS_IN_TANACH;
 use std::collections::HashMap;
 
-pub fn get_tanach() -> Tanach {
+pub fn get_instanstance_of_tanach() -> Tanach {
     let mut tanach = Tanach {
         nr_of_books_expected: NR_OF_BOOKS_IN_TANACH,
         ..Default::default()

@@ -20,7 +20,7 @@ repository.workspace = true
 version.workspace = true
 
 [dependencies]
-#swlc_common = { path = "../swlc_common" }
+swlc_core = { path = "../swlc_core" }
 chrono.workspace = true
 exitcode.workspace = true
 regex.workspace = true

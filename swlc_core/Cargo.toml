@@ -1,9 +1,9 @@
 [package]
-name = "swlc_cli"
+name = "swlc_core"
 #
 authors.workspace = true
 categories.workspace = true
-description = "Contains the CLI frontend of SWLC"
+description = "Core library of the  SWLC"
 documentation.workspace = true
 edition.workspace = true
 # exclude
@@ -15,11 +15,10 @@ license.workspace = true
 # publish
 readme.workspace = true	
 repository.workspace = true
-# rust-version
+# rust-version	
 version.workspace = true
 
 [dependencies]
-swlc_core = {path = "../swlc_core"}
 #chrono.workspace = true 
 #ctrlc-handler.workspace = true 
 directories.workspace = true

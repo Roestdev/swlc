@@ -19,4 +19,4 @@ repository.workspace = true
 version.workspace = true
 
 [dependencies]
-swlc_com = {path = "../swlc_com"}
+swlc_core = {path = "../swlc_core"}
