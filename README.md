@@ -9,6 +9,13 @@
 
 This project is under heavy development. Please note that all aspects of this project are subject to change along the road, due evolving requirements and changes in insight.
 
+**Status indication**
+| Crate       | Type   | Description     |Status |
+| :---        | :----: | :---:           |  ---: |
+| swlc_gen    | bin    | Generate code   | Done  |
+| swlc_core   | lib    | Commonn library | WIP   |
+| swlc_cli    | bin    | CLI frontend    | WIP   |
+| swlc_gui    | bin    | GUI frontend    | Open  |
 
 <br>
 

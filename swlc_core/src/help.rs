@@ -159,6 +159,7 @@ pub fn display_help() {
     println!("    characters belong to one of the sets below:");
     println!("      - A member of the Hebrew character class.");
     println!("      - A white-space conform https://www.unicode.org/reports/tr31/");
+    println!("      e.g. באש");
     println!("--------------------------------------------------------------------");
 }
 

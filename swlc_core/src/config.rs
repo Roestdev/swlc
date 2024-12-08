@@ -98,19 +98,11 @@ impl Config {
             let mut new_config = Config::default();
             new_config.write_to_file();
             println!("A new default configuration file has been created.");
-            //println!("Please re-start the program!");
-            //exit(1); //for now
         }
 
-        let config_toml: ConfigToml =  toml::from_str(&content).expect("\n==> Failed to create Config Object out of config file.\n==> Please remove the configuration file and restart the program!\n\n.");
-        //let config_toml: Result<ConfigToml, Error> =  toml::from_str(&content);
-
-        // let config_toml: Result<ConfigToml, Error > = match toml::from_str(&content) {
-        //     Ok(Some(v)) => v,
-        //     Err(e) => println!("{}", e),
-        // };
-
-        //}
+        let config_toml: ConfigToml =  toml::from_str(&content)
+            .expect("\n==> Failed to create Config Object out of config file.
+                         \n==> Please remove the configuration file and restart the program!\n\n.");
 
         let directory = match config_toml.program_data {
             Some(wlc) => wlc.data_directory.unwrap_or_else(|| {
@@ -129,7 +121,6 @@ impl Config {
             VerseReference,
         ) = match config_toml.search_options {
             Some(search) => {
-                //let search_book_order = search.book_order_id;
                 let search_book_order = search.book_order;
                 let search_start = search.start_of_search;
                 let search_stop = search.end_of_search;
@@ -143,7 +134,6 @@ impl Config {
                     verse_no: 0,
                 };
                 (
-                    //"unknown".to_string(),
                     BookOrder::default(),
                     empty_bible_ref.clone(),
                     empty_bible_ref.clone(),
@@ -154,7 +144,6 @@ impl Config {
             data_directory: PathBuf::from(directory),
             start_of_search: start_searching,
             end_of_search: end_searching,
-            //book_order_id: book_order,
             book_order,
         }
     }
@@ -164,7 +153,6 @@ impl Config {
                 data_directory: Some(self.data_directory.to_string_lossy().to_string()),
             }),
             search_options: Some(ConfigTomlSearch {
-                //book_order_id: self.book_order_id.to_string(),
                 book_order: self.book_order.clone(),
                 start_of_search: self.start_of_search.clone(),
                 end_of_search: self.end_of_search.clone(),
@@ -183,15 +171,14 @@ impl Config {
         let toml = toml::to_string(&config_toml).unwrap();
         let _ = file.write_all(toml.as_bytes());
     }
+    
     pub fn update(
         &mut self,
-        //new_book_order: Option<String>,
         new_book_order: Option<BookOrder>,
         new_start: Option<VerseReference>,
         new_stop: Option<VerseReference>,
     ) {
         if new_book_order.is_some() {
-            //self.book_order_id = new_book_order.unwrap();
             self.book_order = new_book_order.unwrap();
         }
         if new_start.is_some() {
@@ -316,6 +303,7 @@ pub fn set_search_order(config: &mut Config) {
         }
     }
 }
+
 pub fn set_search_range(config: &mut Config, tanach: &Tanach) {
     println!("\n--------------------------------------------------");
     println!("Set a new search range.\n");
