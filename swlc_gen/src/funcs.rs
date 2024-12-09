@@ -127,11 +127,10 @@ pub fn import_book_from_file(in_path: &Path, out_path: &Path) -> Result<(), std:
         let line = line.unwrap_or("Error reading the line".to_string());
         let ch = line.chars().next().unwrap();
         if ch == '\u{202B}' {
-            // mixed text LTR and RTL
+            // found mixed text (LTR and RTL)
 
             //remove asterisk(s)
             let line = line.replace("*", "");
-            //println!("{}", &line);
 
             // remove annotations
             let annotation_re = Regex::new(r"\u{202A}\[.]\u{202C}").unwrap();
@@ -139,7 +138,7 @@ pub fn import_book_from_file(in_path: &Path, out_path: &Path) -> Result<(), std:
             let stripped_line = after.clone();
 
             // retrieve: chapter number, verse number and the verse itself.
-            let verse_re = Regex::new(r"^\u{202B}\u{00A0}(?P<verse_no>\d+)\u{00A0}*\u{05C3}(?P<chapter_no>\d+)\u{00A0}{1,3}(?P<verse>\p{Hebrew}.+\u{05C3})").unwrap();
+            let verse_re = Regex::new(r"^\u{202B}\u{00A0}(?P<verse_no>\d+)\u{00A0}*\u{05C3}(?P<chapter_no>\d+)\u{00A0}{1,3}(?P<verse>\p{Hebrew}.+)\u{202C}$").unwrap();
             match verse_re.captures(&stripped_line) {
                 Some(caps) => {
                     let chapter_no = caps["chapter_no"].parse::<u16>().unwrap();
