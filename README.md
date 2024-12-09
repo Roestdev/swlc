@@ -49,7 +49,7 @@ A crate containing the CLI version of the search program.
 **swcl_gui**  
 A crate containing the CLI version of the search program.
 
-**swcl_model**  
+**swcl_core**  
 A library crate that will contain the model.
 
 **swcl_gen**   
@@ -71,9 +71,9 @@ The generated library consists one function which makes is possible create a mod
 > swlc_gen     generates the library
 > swlc_gen c   copies the library 
 ```
-## HowTo
+## How To
 
-**Preconditions**
+**Prerequisites**
 
 In order to generate a new version of the library yourself you will need the following:
 
@@ -86,25 +86,27 @@ In order to generate a new version of the library yourself you will need the fol
 
 1. Download and unzip the `swlc` package from [GitHub](https://github.com/Roestdev/swlc)
 
-2. Step into the swlc directory
+2. Remove the following files: `TanachHeader.txt` and `TanachIndex.txt` !
+
+3. Step into the swlc directory
 ``` rust
 cd swlc
 ```
 
-3. Unzip Tanach.txt.zip in the following directory: `swlc_gen/data/input`
+4. Unzip Tanach.txt.zip in the following directory: `swlc_gen/data/input`
 
-4. Build the executable `swlc_gen`
+5. Build the executable `swlc_gen`
   
 ``` rust
 cargo build -p swlc_gen
 ```
 
-5. Generate the library first
+6. Generate the library first
 ``` rust
 cargo run -p swlc_gen
 ```
 
-6. Copy the generated library into `swlc_core/src/`
+7. Copy the generated library into `swlc_core/src/`
 
 ``` rust
 cargo run -p swlc_gen c

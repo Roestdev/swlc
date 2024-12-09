@@ -100,9 +100,10 @@ impl Config {
             println!("A new default configuration file has been created.");
         }
 
-        let config_toml: ConfigToml =  toml::from_str(&content)
-            .expect("\n==> Failed to create Config Object out of config file.
-                         \n==> Please remove the configuration file and restart the program!\n\n.");
+        let config_toml: ConfigToml = toml::from_str(&content).expect(
+            "\n==> Failed to create Config Object out of config file.
+                         \n==> Please remove the configuration file and restart the program!\n\n.",
+        );
 
         let directory = match config_toml.program_data {
             Some(wlc) => wlc.data_directory.unwrap_or_else(|| {
@@ -171,7 +172,7 @@ impl Config {
         let toml = toml::to_string(&config_toml).unwrap();
         let _ = file.write_all(toml.as_bytes());
     }
-    
+
     pub fn update(
         &mut self,
         new_book_order: Option<BookOrder>,

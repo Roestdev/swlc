@@ -8,7 +8,7 @@ use std::path::Path;
 use std::process::exit;
 use std::process::Command;
 
-use swlc_core::NR_OF_BOOKS_IN_TANACH;
+//use swlc_core::NR_OF_BOOKS_IN_TANACH;
 
 pub fn get_files_names(wlc_dir: &str) -> Vec<String> {
     let entries = fs::read_dir(wlc_dir);
@@ -31,6 +31,7 @@ pub fn get_files_names(wlc_dir: &str) -> Vec<String> {
         })
         .collect();
 
+    /*
     println!(
         "Check if the correct number of WLC txt files are present in the source directory ..."
     );
@@ -45,24 +46,8 @@ pub fn get_files_names(wlc_dir: &str) -> Vec<String> {
     } else {
         println!("  > Correct number of files are found.");
     }
+    */
     file_names
-}
-
-pub fn process_all_source_files(
-    wlc_dir: &str,
-    file_names: Vec<String>,
-    file_to_generate_p: &Path,
-) -> Result<(), std::io::Error> {
-    println!("Generate code for every WLC text file ...");
-    for file in file_names {
-        println!("  > Processing file: [{}{}]", wlc_dir, file);
-        let wlc_dir = Path::new(wlc_dir);
-        let file_to_read: &str = &file;
-        let file_to_read_pb = wlc_dir.join(file_to_read);
-        let file_to_read_p = file_to_read_pb.as_path();
-        import_book_from_file(file_to_read_p, file_to_generate_p)?;
-    }
-    Ok(())
 }
 
 pub fn insert_header(output_file: &Path) -> Result<(), std::io::Error> {
@@ -104,31 +89,20 @@ pub fn insert_header(output_file: &Path) -> Result<(), std::io::Error> {
     Ok(())
 }
 
-pub fn insert_footer(output_file: &Path) -> Result<(), std::io::Error> {
-    println!("Inserting a footer to the generated code ...");
-    let output_file = OpenOptions::new()
-        .append(true)
-        .create(true)
-        .open(output_file)?;
-    //.expect("  > Unable to insert the footer into the output file.");
-
-    writeln!(
-        &output_file,
-        //"check_counters(&tanach);\n\
-        "tanach\n\
-        }}\n\
-         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\
-         //                     ===> END OF GENERATED CODE <===                  +\n\
-         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n",
-    )?;
-    Ok(())
-}
-
-pub fn format_generated_file(file_to_generate_p: &Path) -> Result<(), std::io::Error> {
-    // Format generated code for readability
-    println!("Formatting the generated code with [rustfmt] ...");
-    Command::new("rustfmt").arg(file_to_generate_p).spawn()?;
-    //.expect("failed to execute command");
+pub fn process_all_source_files(
+    wlc_dir: &str,
+    file_names: Vec<String>,
+    file_to_generate_p: &Path,
+) -> Result<(), std::io::Error> {
+    println!("Generate code for every WLC text file ...");
+    for file in file_names {
+        println!("  > Processing file: [{}{}]", wlc_dir, file);
+        let wlc_dir = Path::new(wlc_dir);
+        let file_to_read: &str = &file;
+        let file_to_read_pb = wlc_dir.join(file_to_read);
+        let file_to_read_p = file_to_read_pb.as_path();
+        import_book_from_file(file_to_read_p, file_to_generate_p)?;
+    }
     Ok(())
 }
 
@@ -154,10 +128,17 @@ pub fn import_book_from_file(in_path: &Path, out_path: &Path) -> Result<(), std:
         let ch = line.chars().next().unwrap();
         if ch == '\u{202B}' {
             // mixed text LTR and RTL
+
+            //remove asterisk(s)
+            let line = line.replace("*", "");
+            //println!("{}", &line);
+
+            // remove annotations
             let annotation_re = Regex::new(r"\u{202A}\[.]\u{202C}").unwrap();
             let after = annotation_re.replace_all(&line, "");
             let stripped_line = after.clone();
-            // 05C3
+
+            // retrieve: chapter number, verse number and the verse itself.
             let verse_re = Regex::new(r"^\u{202B}\u{00A0}(?P<verse_no>\d+)\u{00A0}*\u{05C3}(?P<chapter_no>\d+)\u{00A0}{1,3}(?P<verse>\p{Hebrew}.+\u{05C3})").unwrap();
             match verse_re.captures(&stripped_line) {
                 Some(caps) => {
@@ -181,8 +162,8 @@ pub fn import_book_from_file(in_path: &Path, out_path: &Path) -> Result<(), std:
                     )?;
                 }
                 None => {
-                    writeln!(&output_file, "Unable to add this verse:")?;
-                    writeln!(&output_file, "- {}", &line.clone())?;
+                    writeln!(&output_file, "ERROR: Unable to add this verse:")?;
+                    writeln!(&output_file, "Line = [{}]", &line.clone())?;
                 }
             }
         } else {
@@ -245,6 +226,34 @@ pub fn import_book_from_file(in_path: &Path, out_path: &Path) -> Result<(), std:
             }
         }
     }
+    Ok(())
+}
+
+pub fn insert_footer(output_file: &Path) -> Result<(), std::io::Error> {
+    println!("Inserting a footer to the generated code ...");
+    let output_file = OpenOptions::new()
+        .append(true)
+        .create(true)
+        .open(output_file)?;
+    //.expect("  > Unable to insert the footer into the output file.");
+
+    writeln!(
+        &output_file,
+        //"check_counters(&tanach);\n\
+        "tanach\n\
+        }}\n\
+         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\
+         //                     ===> END OF GENERATED CODE <===                  +\n\
+         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n",
+    )?;
+    Ok(())
+}
+
+pub fn format_generated_file(file_to_generate_p: &Path) -> Result<(), std::io::Error> {
+    // Format generated code for readability
+    println!("Formatting the generated code with [rustfmt] ...");
+    Command::new("rustfmt").arg(file_to_generate_p).spawn()?;
+    //.expect("failed to execute command");
     Ok(())
 }
 

@@ -3,12 +3,8 @@ use std::path::Path;
 
 mod funcs;
 use crate::funcs::{
-    copy_generated_file
-    , format_generated_file
-    , get_files_names
-    , insert_footer
-    , insert_header
-    , process_all_source_files,
+    copy_generated_file, format_generated_file, get_files_names, insert_footer, insert_header,
+    process_all_source_files,
 };
 fn main() {
     // get cmd option

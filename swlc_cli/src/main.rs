@@ -1,10 +1,9 @@
 use std::process::exit;
 
 use swlc_core::config::*;
-use swlc_core::model_content::get_instanstance_of_tanach;
 use swlc_core::help::display_help;
 use swlc_core::help::display_list_of_abbreviations;
-// use swlc_core::help::*;
+use swlc_core::model_content::get_instanstance_of_tanach;
 use swlc_core::search::search_text_in_tanach;
 use swlc_core::tools::check_counters;
 use swlc_core::tools::reorder_books;
@@ -55,5 +54,4 @@ fn main() {
             }
         }
     }
-   
 }
